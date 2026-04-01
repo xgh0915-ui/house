@@ -28,10 +28,10 @@ def inject_custom_css():
     .stApp {
         background: linear-gradient(180deg, #f5f7fb 0%, #eef3f9 100%);
     }
-    /* 干掉空的横向布局（columns生成的） */
-div[data-testid="stHorizontalBlock"]:empty {
-    display: none !important;
-}
+    .section-title-align {
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+    }
 
     .block-container {
         max-width: 1200px;
@@ -683,8 +683,10 @@ def main():
     if choice == "📝 录入房屋信息":
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
 
-
-        render_section("1. 基础信息")
+        st.markdown(
+            '<div class="section-title section-title-align">1. 基础信息</div>',
+            unsafe_allow_html=True
+        )
         col1, col2, col3 = st.columns(3)
 
         with col1:
