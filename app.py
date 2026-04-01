@@ -28,17 +28,6 @@ def inject_custom_css():
     .stApp {
         background: linear-gradient(180deg, #f5f7fb 0%, #eef3f9 100%);
     }
-    label[data-testid="stWidgetLabel"] {
-        min-height: 32px;
-        display: flex;
-        align-items: flex-end;
-    }
-    
-    div[data-baseweb="select"] > div,
-    div[data-baseweb="input"] > div,
-    div[data-testid="stDateInput"] > div {
-        min-height: 52px !important;
-    }
 
     .block-container {
         max-width: 1200px;
@@ -59,10 +48,6 @@ def inject_custom_css():
     section[data-testid="stSidebar"] span,
     section[data-testid="stSidebar"] div {
         color: #1f2937 !important;
-    }
-    /* 隐藏所有空的容器（关键） */
-    .element-container:empty {
-        display: none !important;
     }
 
     .page-header-wrap {
@@ -133,7 +118,7 @@ def inject_custom_css():
         background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         padding: 18px 14px;
         border-radius: 18px;
-        color: #ffffff;
+        color: orange;
         font-size: 22px;
         font-weight: 800;
         text-align: center;
@@ -441,6 +426,16 @@ def render_mini_title(title):
     st.markdown(f'<div class="mini-title">{title}</div>', unsafe_allow_html=True)
 
 
+def open_admin_card():
+    st.markdown('<div class="admin-card">', unsafe_allow_html=True)
+
+
+def close_admin_card():
+    st.markdown('</div>', unsafe_allow_html=True)
+
+
+def open_compare_card():
+    st.markdown('<div class="compare-card">', unsafe_allow_html=True)
 
 
 def close_compare_card():
@@ -683,6 +678,7 @@ def main():
 
     st.sidebar.markdown('<div class="sidebar-brand">🏠 合肥看房助手</div>', unsafe_allow_html=True)
 
+
     menu = ["📝 录入房屋信息", "📋 查看录入信息", "📊 房源对比", "🗑️ 管理数据"]
     choice = st.sidebar.radio("导航菜单", menu, index=0)
 
@@ -690,89 +686,48 @@ def main():
     if choice == "📝 录入房屋信息":
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
 
-
+        open_admin_card()
         render_section("1. 基础信息")
-        render_section("1. 基础信息")
+        col1, col2, col3 = st.columns(3)
 
-        # 第1行
-        r1c1, r1c2, r1c3, r1c4, r1c5 = st.columns([1.25, 1.25, 0.7, 0.7, 0.7])
-        with r1c1:
+        with col1:
             view_date = st.date_input("看房日期", datetime.now())
-        with r1c2:
-            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0)
-        with r1c3:
-            layout_room = st.selectbox(
-                "几室",
-                ["1 室", "2 室", "3 室", "4 室", "5 室", "6 室", "复式"],
-                index=2,
-                key="layout_room"
-            )
-        with r1c4:
-            layout_hall = st.selectbox(
-                "几厅",
-                ["1 厅", "2 厅", "3 厅"],
-                index=1,
-                key="layout_hall"
-            )
-        with r1c5:
-            layout_bath = st.selectbox(
-                "几卫",
-                ["1 卫", "2 卫", "3 卫"],
-                index=0,
-                key="layout_bath"
-            )
-
-        layout = f"{layout_room}{layout_hall}{layout_bath}"
-
-        # 第2行
-        r2c1, r2c2, r2c3, r2c4 = st.columns([1.25, 1.25, 0.9, 0.9])
-        with r2c1:
-            district = st.selectbox(
-                "区域",
-                ["政务区", "滨湖区", "高新区", "蜀山区", "庐阳区", "包河区", "瑶海区", "其他"]
-            )
-        with r2c2:
-            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0)
-        with r2c3:
-            floor_current = st.selectbox(
-                "当前层",
-                list(range(1, 34)),
-                index=4,
-                key="floor_current"
-            )
-        with r2c4:
-            floor_total = st.selectbox(
-                "总层数",
-                [6, 11, 18, 24, 26, 28, 30, 32, 33],
-                index=2,
-                key="floor_total"
-            )
-
-        floor = f"{floor_current}/{floor_total}"
-
-        # 第3行
-        r3c1, r3c2, r3c3 = st.columns([1.25, 1.25, 1.25])
-        with r3c1:
+            district = st.selectbox("区域",
+                                    ["政务区", "滨湖区", "高新区", "蜀山区", "庐阳区", "包河区", "瑶海区", "其他"])
             existing_communities = get_unique_communities()
             community = st.selectbox("小区名称", existing_communities)
-        with r3c2:
+            house_type = st.selectbox("房屋类型", ["商品房", "回迁房"], help="商品房产权清晰，回迁房需确认土地性质")
+
+        with col2:
+            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0)
+            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0)
             unit_price = st.number_input("单价 (万/㎡)", min_value=0.0, step=0.1)
-        with r3c3:
-            orientation = st.selectbox("朝向", ["南", "东南", "东", "西南", "北", "其他"])
-
-        # 第4行
-        r4c1, r4c2, r4c3 = st.columns([1.25, 1.25, 1.25])
-        with r4c1:
-            house_type = st.selectbox(
-                "房屋类型",
-                ["商品房", "回迁房"],
-                help="商品房产权清晰，回迁房需确认土地性质"
-            )
-        with r4c2:
             parking = st.selectbox("地下停车场", ["有", "无", "不确定"])
-        with r4c3:
-            year = st.number_input("建成年份", min_value=1980, max_value=2025, step=1, value=2015)
 
+        with col3:
+            lc1, lc2, lc3 = st.columns(3)
+            with lc1:
+                layout_room = st.selectbox("几室", ["1 室", "2 室", "3 室", "4 室", "5 室", "6 室", "复式"], index=2,
+                                           key="layout_room")
+            with lc2:
+                layout_hall = st.selectbox("几厅", ["1 厅", "2 厅", "3 厅"], index=1, key="layout_hall")
+            with lc3:
+                layout_bath = st.selectbox("几卫", ["1 卫", "2 卫", "3 卫"], index=0, key="layout_bath")
+
+            layout = f"{layout_room}{layout_hall}{layout_bath}"
+
+            fc1, fc2 = st.columns(2)
+            with fc1:
+                floor_current = st.selectbox("当前层", list(range(1, 34)), index=4, key="floor_current")
+            with fc2:
+                floor_total = st.selectbox("总层数", [6, 11, 18, 24, 26, 28, 30, 32, 33], index=2, key="floor_total")
+
+            floor = f"{floor_current}/{floor_total}"
+            orientation = st.selectbox("朝向", ["南", "东南", "东", "西南", "北", "其他"])
+            year = st.number_input("建成年份", min_value=1980, max_value=2025, step=1, value=2015)
+        close_admin_card()
+
+        open_admin_card()
         render_section("2. 产权与交易")
         c1, c2, c3, c4 = st.columns(4)
         with c1:
@@ -793,9 +748,9 @@ def main():
         seizure_dispute = st.selectbox("查封/纠纷", ["无", "有查封", "有纠纷", "不确定"])
         co_owners = st.text_input("产权人情况", placeholder="如：单独所有/夫妻共同/与父母共有")
         hukou_migration = st.text_input("户口迁出安排", placeholder="如：过户前迁出/具体时间约定")
+        close_admin_card()
 
-
-
+        open_admin_card()
         render_section("3. 评价与备注")
 
         render_mini_title("🏠 房子基本情况")
@@ -820,7 +775,7 @@ def main():
                     unsafe_allow_html=True)
         score = render_score_selector("add_house", default_score=5, label="综合评分 (1-10)")
         status = st.selectbox("当前状态", ["考虑中", "已排除", "准备谈价", "已成交"])
-
+        close_admin_card()
 
         if st.button("💾 保存记录", type="primary", use_container_width=True):
             if not community:
@@ -867,7 +822,7 @@ def main():
             with s4:
                 st.metric("已成交", int((df["status"] == "已成交").sum()))
 
-
+            open_admin_card()
             col1, col2, col3 = st.columns([2, 1, 1])
             with col1:
                 search = st.text_input("🔎 搜索小区/区域", placeholder="输入关键词")
@@ -875,7 +830,7 @@ def main():
                 status_filter = st.multiselect("状态筛选", ["考虑中", "已排除", "准备谈价", "已成交"], default=[])
             with col3:
                 sort_by = st.selectbox("排序方式", ["看房日期↓", "看房日期↑", "总价↓", "总价↑", "评分↓", "评分↑"])
-
+            close_admin_card()
 
             if search:
                 df = df[
@@ -1160,7 +1115,7 @@ def main():
         df = get_all_houses()
 
         if not df.empty:
-
+            open_compare_card()
             st.markdown('<div class="filter-title">🔍 多条件筛选</div>', unsafe_allow_html=True)
 
             col1, col2, col3, col4 = st.columns(4)
@@ -1262,7 +1217,7 @@ def main():
 
             st.info(f"📊 找到 {len(df)} 套符合条件的房源")
 
-
+            open_compare_card()
             st.markdown('<div class="filter-title">📋 房源对比总表</div>', unsafe_allow_html=True)
 
             df_show = df.copy()
@@ -1290,7 +1245,7 @@ def main():
                     top_left, top_mid, top_right = st.columns([2, 2, 1.2])
 
                     with top_left:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">🏘 基本信息</div>', unsafe_allow_html=True)
                         st.write(f"**小区名称：** {detail['community_name']}")
                         st.write(f"**所属区域：** {detail['district']}")
@@ -1302,7 +1257,7 @@ def main():
                         close_compare_card()
 
                     with top_mid:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">💰 价格指标</div>', unsafe_allow_html=True)
                         st.write(f"**挂牌总价：** {detail['total_price']} 万")
                         st.write(f"**建筑面积：** {detail['area']} ㎡")
@@ -1313,7 +1268,7 @@ def main():
                         close_compare_card()
 
                     with top_right:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">⭐ 综合结论</div>', unsafe_allow_html=True)
                         st.markdown(f'<div class="score-badge">{int(detail["score"])} 分</div>', unsafe_allow_html=True)
                         st.write("")
@@ -1323,7 +1278,7 @@ def main():
 
                     d1, d2 = st.columns(2)
                     with d1:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">📜 产权与交易</div>', unsafe_allow_html=True)
                         st.write(f"**满五唯一：** {detail['is_full5_unique']}")
                         st.write(f"**抵押情况：** {detail['has_mortgage']}")
@@ -1337,7 +1292,7 @@ def main():
                         close_compare_card()
 
                     with d2:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">🔍 房屋细节</div>', unsafe_allow_html=True)
                         st.write(f"**房东出售原因：** {detail.get('landlord_reason', 'N/A')}")
                         st.write(f"**抵押详情：** {detail.get('mortgage_info', 'N/A')}")
@@ -1349,13 +1304,13 @@ def main():
 
                     e1, e2 = st.columns(2)
                     with e1:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">✅ 优点总结</div>', unsafe_allow_html=True)
                         st.write(detail['pros'])
                         close_compare_card()
 
                     with e2:
-
+                        open_compare_card()
                         st.markdown('<div class="detail-box-title">❌ 缺点/风险总结</div>', unsafe_allow_html=True)
                         st.write(detail['cons'])
                         close_compare_card()
@@ -1392,7 +1347,7 @@ def main():
             operation = st.radio("选择操作", ["🗑️ 删除记录", "✏️ 编辑记录"], horizontal=True)
 
             if operation == "🗑️ 删除记录":
-
+                open_admin_card()
                 render_mini_title("删除房源")
                 del_id = st.number_input("输入要删除的房源 ID", min_value=1, step=1)
 
@@ -1411,16 +1366,16 @@ def main():
                         st.rerun()
                     else:
                         st.error("❌ 删除失败，ID 不存在")
-
+                close_admin_card()
 
             elif operation == "✏️ 编辑记录":
-
+                open_admin_card()
                 st.info("💡 建议在「📋 查看录入信息」页面进行编辑，功能更完整")
                 edit_id = st.number_input("输入要编辑的房源 ID", min_value=1, step=1)
                 if st.button("跳转到编辑", use_container_width=True):
                     st.session_state['edit_target_id'] = edit_id
                     st.rerun()
-
+                close_admin_card()
         else:
             st.info("没有数据可管理。")
 
