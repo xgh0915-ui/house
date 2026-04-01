@@ -551,15 +551,6 @@ def main():
     if choice == "📝 录入房屋信息":
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
 
-        top1, top2, top3, top4 = st.columns(4)
-        with top1:
-            st.metric("当前功能", "房源新增")
-        with top2:
-            st.metric("录入模式", "结构化表单")
-        with top3:
-            st.metric("核心目标", "统一比较标准")
-        with top4:
-            st.metric("数据载体", "CSV 本地存储")
 
         open_admin_card()
         render_section("1. 基础信息")
