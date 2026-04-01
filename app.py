@@ -288,13 +288,6 @@ def render_mini_title(title):
     st.markdown(f'<div class="mini-title">{title}</div>', unsafe_allow_html=True)
 
 
-def open_admin_card():
-    st.markdown('<div class="admin-card">', unsafe_allow_html=True)
-
-
-def close_admin_card():
-    st.markdown('</div>', unsafe_allow_html=True)
-
 
 def open_compare_card():
     st.markdown('<div class="compare-card">', unsafe_allow_html=True)
@@ -538,7 +531,7 @@ def main():
     init_csv()
     inject_custom_css()
 
-    st.sidebar.markdown('<div class="sidebar-brand" style="background-color:orange">🏠 合肥看房助手</div>', unsafe_allow_html=True)
+    st.sidebar.markdown('<div class="sidebar-brand">🏠 合肥看房助手</div>', unsafe_allow_html=True)
 
     menu = ["📝 录入房屋信息", "📋 查看录入信息", "📊 房源对比", "🗑️ 管理数据"]
     choice = st.sidebar.radio("导航菜单", menu, index=0)
@@ -548,7 +541,7 @@ def main():
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
 
 
-        open_admin_card()
+
         render_section("1. 基础信息")
         col1, col2, col3 = st.columns(3)
 
@@ -587,9 +580,9 @@ def main():
             floor = f"{floor_current}/{floor_total}"
             orientation = st.selectbox("朝向", ["南", "东南", "东", "西南", "北", "其他"])
             year = st.number_input("建成年份", min_value=1980, max_value=2025, step=1, value=2015)
-        close_admin_card()
 
-        open_admin_card()
+
+
         render_section("2. 产权与交易")
         c1, c2, c3, c4 = st.columns(4)
         with c1:
@@ -610,9 +603,9 @@ def main():
         seizure_dispute = st.selectbox("查封/纠纷", ["无", "有查封", "有纠纷", "不确定"])
         co_owners = st.text_input("产权人情况", placeholder="如：单独所有/夫妻共同/与父母共有")
         hukou_migration = st.text_input("户口迁出安排", placeholder="如：过户前迁出/具体时间约定")
-        close_admin_card()
 
-        open_admin_card()
+
+
         render_section("3. 评价与备注")
 
         render_mini_title("🏠 房子基本情况")
@@ -637,7 +630,7 @@ def main():
                     unsafe_allow_html=True)
         score = render_score_selector("add_house", default_score=5, label="综合评分 (1-10)")
         status = st.selectbox("当前状态", ["考虑中", "已排除", "准备谈价", "已成交"])
-        close_admin_card()
+
 
         if st.button("💾 保存记录", type="primary", use_container_width=True):
             if not community:
@@ -684,7 +677,7 @@ def main():
             with s4:
                 st.metric("已成交", int((df["status"] == "已成交").sum()))
 
-            open_admin_card()
+
             col1, col2, col3 = st.columns([2, 1, 1])
             with col1:
                 search = st.text_input("🔎 搜索小区/区域", placeholder="输入关键词")
@@ -692,7 +685,7 @@ def main():
                 status_filter = st.multiselect("状态筛选", ["考虑中", "已排除", "准备谈价", "已成交"], default=[])
             with col3:
                 sort_by = st.selectbox("排序方式", ["看房日期↓", "看房日期↑", "总价↓", "总价↑", "评分↓", "评分↑"])
-            close_admin_card()
+
 
             if search:
                 df = df[
@@ -1208,7 +1201,7 @@ def main():
             operation = st.radio("选择操作", ["🗑️ 删除记录", "✏️ 编辑记录"], horizontal=True)
 
             if operation == "🗑️ 删除记录":
-                open_admin_card()
+
                 render_mini_title("删除房源")
                 del_id = st.number_input("输入要删除的房源 ID", min_value=1, step=1)
 
@@ -1227,16 +1220,16 @@ def main():
                         st.rerun()
                     else:
                         st.error("❌ 删除失败，ID 不存在")
-                close_admin_card()
+
 
             elif operation == "✏️ 编辑记录":
-                open_admin_card()
+
                 st.info("💡 建议在「📋 查看录入信息」页面进行编辑，功能更完整")
                 edit_id = st.number_input("输入要编辑的房源 ID", min_value=1, step=1)
                 if st.button("跳转到编辑", use_container_width=True):
                     st.session_state['edit_target_id'] = edit_id
                     st.rerun()
-                close_admin_card()
+
         else:
             st.info("没有数据可管理。")
 
