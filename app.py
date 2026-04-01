@@ -49,7 +49,7 @@ def inject_custom_css():
     }
 
     .page-header-wrap {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+        background: pink;
         border: 1px solid #e5e7eb;
         border-radius: 20px;
         padding: 18px 20px 16px 20px;
@@ -60,7 +60,7 @@ def inject_custom_css():
     .main-title {
         font-size: 30px;
         font-weight: 800;
-        color: pink;
+        color: #0f172a;
         margin-bottom: 4px;
         line-height: 1.2;
     }
