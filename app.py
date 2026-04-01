@@ -72,7 +72,7 @@ def inject_custom_css():
     }
 
     .section-title {
-        background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+        background: #ddeafb;
         color: white;
         padding: 12px 16px;
         border-radius: 14px;
