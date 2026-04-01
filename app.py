@@ -201,6 +201,15 @@ def inject_custom_css():
     div[data-testid="stAlert"] {
         border-radius: 14px !important;
     }
+    
+    
+    /* Toast 消息居中样式 */
+    div[data-testid="stToast"] {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        right: auto !important;
+    }
+
 
     div[data-testid="metric-container"] {
         background: #ffffff;
