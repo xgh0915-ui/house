@@ -28,9 +28,16 @@ def inject_custom_css():
     .stApp {
         background: linear-gradient(180deg, #f5f7fb 0%, #eef3f9 100%);
     }
-    .section-title-align {
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
+    label[data-testid="stWidgetLabel"] {
+        min-height: 32px;
+        display: flex;
+        align-items: flex-end;
+    }
+    
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="input"] > div,
+    div[data-testid="stDateInput"] > div {
+        min-height: 52px !important;
     }
 
     .block-container {
@@ -683,49 +690,88 @@ def main():
     if choice == "📝 录入房屋信息":
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
 
-        st.markdown(
-            '<div class="section-title section-title-align">1. 基础信息</div>',
-            unsafe_allow_html=True
-        )
-        col1, col2, col3 = st.columns(3)
 
-        with col1:
+        render_section("1. 基础信息")
+        render_section("1. 基础信息")
+
+        # 第1行
+        r1c1, r1c2, r1c3, r1c4, r1c5 = st.columns([1.25, 1.25, 0.7, 0.7, 0.7])
+        with r1c1:
             view_date = st.date_input("看房日期", datetime.now())
-            district = st.selectbox("区域",
-                                    ["政务区", "滨湖区", "高新区", "蜀山区", "庐阳区", "包河区", "瑶海区", "其他"])
+        with r1c2:
+            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0)
+        with r1c3:
+            layout_room = st.selectbox(
+                "几室",
+                ["1 室", "2 室", "3 室", "4 室", "5 室", "6 室", "复式"],
+                index=2,
+                key="layout_room"
+            )
+        with r1c4:
+            layout_hall = st.selectbox(
+                "几厅",
+                ["1 厅", "2 厅", "3 厅"],
+                index=1,
+                key="layout_hall"
+            )
+        with r1c5:
+            layout_bath = st.selectbox(
+                "几卫",
+                ["1 卫", "2 卫", "3 卫"],
+                index=0,
+                key="layout_bath"
+            )
+
+        layout = f"{layout_room}{layout_hall}{layout_bath}"
+
+        # 第2行
+        r2c1, r2c2, r2c3, r2c4 = st.columns([1.25, 1.25, 0.9, 0.9])
+        with r2c1:
+            district = st.selectbox(
+                "区域",
+                ["政务区", "滨湖区", "高新区", "蜀山区", "庐阳区", "包河区", "瑶海区", "其他"]
+            )
+        with r2c2:
+            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0)
+        with r2c3:
+            floor_current = st.selectbox(
+                "当前层",
+                list(range(1, 34)),
+                index=4,
+                key="floor_current"
+            )
+        with r2c4:
+            floor_total = st.selectbox(
+                "总层数",
+                [6, 11, 18, 24, 26, 28, 30, 32, 33],
+                index=2,
+                key="floor_total"
+            )
+
+        floor = f"{floor_current}/{floor_total}"
+
+        # 第3行
+        r3c1, r3c2, r3c3 = st.columns([1.25, 1.25, 1.25])
+        with r3c1:
             existing_communities = get_unique_communities()
             community = st.selectbox("小区名称", existing_communities)
-            house_type = st.selectbox("房屋类型", ["商品房", "回迁房"], help="商品房产权清晰，回迁房需确认土地性质")
-
-        with col2:
-            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0)
-            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0)
+        with r3c2:
             unit_price = st.number_input("单价 (万/㎡)", min_value=0.0, step=0.1)
-            parking = st.selectbox("地下停车场", ["有", "无", "不确定"])
-
-        with col3:
-            lc1, lc2, lc3 = st.columns(3)
-            with lc1:
-                layout_room = st.selectbox("几室", ["1 室", "2 室", "3 室", "4 室", "5 室", "6 室", "复式"], index=2,
-                                           key="layout_room")
-            with lc2:
-                layout_hall = st.selectbox("几厅", ["1 厅", "2 厅", "3 厅"], index=1, key="layout_hall")
-            with lc3:
-                layout_bath = st.selectbox("几卫", ["1 卫", "2 卫", "3 卫"], index=0, key="layout_bath")
-
-            layout = f"{layout_room}{layout_hall}{layout_bath}"
-
-            fc1, fc2 = st.columns(2)
-            with fc1:
-                floor_current = st.selectbox("当前层", list(range(1, 34)), index=4, key="floor_current")
-            with fc2:
-                floor_total = st.selectbox("总层数", [6, 11, 18, 24, 26, 28, 30, 32, 33], index=2, key="floor_total")
-
-            floor = f"{floor_current}/{floor_total}"
+        with r3c3:
             orientation = st.selectbox("朝向", ["南", "东南", "东", "西南", "北", "其他"])
+
+        # 第4行
+        r4c1, r4c2, r4c3 = st.columns([1.25, 1.25, 1.25])
+        with r4c1:
+            house_type = st.selectbox(
+                "房屋类型",
+                ["商品房", "回迁房"],
+                help="商品房产权清晰，回迁房需确认土地性质"
+            )
+        with r4c2:
+            parking = st.selectbox("地下停车场", ["有", "无", "不确定"])
+        with r4c3:
             year = st.number_input("建成年份", min_value=1980, max_value=2025, step=1, value=2015)
-
-
 
         render_section("2. 产权与交易")
         c1, c2, c3, c4 = st.columns(4)
