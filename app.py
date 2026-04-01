@@ -49,14 +49,18 @@ def inject_custom_css():
     section[data-testid="stSidebar"] div {
         color: #1f2937 !important;
     }
+    /* 隐藏所有空的容器（关键） */
+    .element-container:empty {
+        display: none !important;
+    }
 
     .page-header-wrap {
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    box-shadow: none;
-    margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        padding: 18px 20px 16px 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        margin-bottom: 14px;
     }
 
     .main-title {
