@@ -22,7 +22,7 @@ def inject_custom_css():
     st.markdown("""
     <style>
     header[data-testid="stHeader"] {
-        display: none;
+        display: block;
     }
 
     .stApp {
