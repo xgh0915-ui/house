@@ -496,7 +496,7 @@ def get_house_by_id(house_id):
 
 def get_unique_communities():
     preset_communities = [
-        "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭"
+        "蓝光半岛公馆", "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭"
     ]
 
     df = get_all_houses()
@@ -650,7 +650,7 @@ def main():
                     'land_usage_type': land_usage_type
                 }
                 add_house(data)
-                st.success("✅ 保存成功！")
+                st.toast("保存成功！", icon="🎉")
 
     # ================= 查看录入信息 =================
     elif choice == "📋 查看录入信息":
