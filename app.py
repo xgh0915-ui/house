@@ -49,7 +49,7 @@ def inject_custom_css():
     }
 
     .page-header-wrap {
-        background: pink;
+        background: #ddeafb;
         border: 1px solid #e5e7eb;
         border-radius: 20px;
         padding: 18px 20px 16px 20px;
@@ -118,7 +118,7 @@ def inject_custom_css():
     }
 
     .sidebar-brand {
-        background: orange;
+        background: #ddeafb;
         padding: 18px 14px;
         border-radius: 18px;
         color: white;
