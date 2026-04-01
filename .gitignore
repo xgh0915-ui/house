@@ -1,0 +1,10 @@
+# 默认忽略的文件
+/shelf/
+/workspace.xml
+.idea/*.xml
+.idea/house.iml
+.idea/inspectionProfiles/*.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
