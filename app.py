@@ -297,7 +297,7 @@ def inject_custom_css():
     <style>
     /* 整体页面下移，避免被 header 遮挡 */
     .block-container {
-        padding-top: 4rem !important;
+        padding-top: 3rem !important;
     }
     </style>
     """, unsafe_allow_html=True)
