@@ -512,7 +512,7 @@ def get_house_by_id(house_id):
 
 def get_unique_communities():
     preset_communities = [
-        "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭"
+        "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭", "蓝光半岛公馆"
     ]
 
     df = get_all_houses()
@@ -974,7 +974,7 @@ def main():
 
             st.download_button(
                 label="📥 导出当前列表为 CSV",
-                data=df.to_csv(index=False, encoding='utf-8-sig'),
+                data=df.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig'),
                 file_name=f"hefei_house_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
                 mime='text/csv',
                 use_container_width=True
@@ -1191,7 +1191,7 @@ def main():
 
             st.download_button(
                 label="📥 导出对比结果 CSV",
-                data=df.to_csv(index=False).encode('utf-8-sig'),
+                data=df.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig'),
                 file_name='hefei_house_compare.csv',
                 mime='text/csv',
                 use_container_width=True
