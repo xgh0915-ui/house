@@ -275,6 +275,32 @@ def inject_custom_css():
     }
     </style>
     """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    /* 隐藏右下角菜单（⋮ 按钮） */
+    button[kind="header"] {
+        display: none;
+    }
+
+    /* 隐藏右下角“Manage app / About”菜单 */
+    div[data-testid="stToolbar"] {
+        display: none;
+    }
+
+    /* 隐藏 Deploy 按钮 */
+    div[data-testid="stDecoration"] {
+        display: none;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    /* 整体页面下移，避免被 header 遮挡 */
+    .block-container {
+        padding-top: 4rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 
 def render_page_header(title, subtitle=""):
