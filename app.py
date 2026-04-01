@@ -28,6 +28,10 @@ def inject_custom_css():
     .stApp {
         background: linear-gradient(180deg, #f5f7fb 0%, #eef3f9 100%);
     }
+    /* 干掉空的横向布局（columns生成的） */
+div[data-testid="stHorizontalBlock"]:empty {
+    display: none !important;
+}
 
     .block-container {
         max-width: 1200px;
