@@ -118,10 +118,10 @@ def inject_custom_css():
     }
 
     .sidebar-brand {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        background: #0f172a;
         padding: 18px 14px;
         border-radius: 18px;
-        color: #ffffff;
+        color: white;
         font-size: 22px;
         font-weight: 800;
         text-align: center;
