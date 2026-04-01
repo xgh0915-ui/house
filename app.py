@@ -26,15 +26,13 @@ def inject_custom_css():
     }
 
     .stApp {
-        background: linear-gradient(180deg, #f5f7fb 0%, #eef3f9 100%);
+        background: #f3f6fb;
     }
 
     .block-container {
-        max-width: 1200px;
-        padding-top: 1rem;
+        max-width: 1500px;
+        padding-top: 1.4rem;
         padding-bottom: 2rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 
     section[data-testid="stSidebar"] {
@@ -65,14 +63,12 @@ def inject_custom_css():
         color: #0f172a;
         margin-bottom: 4px;
         line-height: 1.2;
-        letter-spacing: -0.3px;
     }
 
     .sub-title {
         font-size: 14px;
         color: #64748b;
         margin-bottom: 0;
-        line-height: 1.6;
     }
 
     .section-title {
@@ -96,14 +92,21 @@ def inject_custom_css():
         padding-left: 2px;
     }
 
-    .admin-card,
-    .compare-card {
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(6px);
+    .admin-card {
+        background: #ffffff;
         border: 1px solid #e5e7eb;
         border-radius: 18px;
-        padding: 16px 16px 12px 16px;
+        padding: 16px 16px 10px 16px;
         box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+        margin-bottom: 14px;
+    }
+
+    .compare-card {
+        background: #ffffff;
+        border: 1px solid #dbe4f0;
+        border-radius: 18px;
+        padding: 14px 16px 12px 16px;
+        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
         margin-bottom: 14px;
     }
 
@@ -118,7 +121,7 @@ def inject_custom_css():
         background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         padding: 18px 14px;
         border-radius: 18px;
-        color: orange;
+        color: #ffffff;
         font-size: 22px;
         font-weight: 800;
         text-align: center;
@@ -134,14 +137,12 @@ def inject_custom_css():
         margin-bottom: 12px;
         font-size: 13px;
         color: #475569 !important;
-        line-height: 1.6;
     }
 
     label[data-testid="stWidgetLabel"] p {
         font-size: 14px !important;
         font-weight: 700 !important;
         color: #1f2937 !important;
-        line-height: 1.4 !important;
     }
 
     div[data-baseweb="input"] > div,
@@ -150,7 +151,7 @@ def inject_custom_css():
         border-radius: 12px !important;
         border: 1px solid #d1d5db !important;
         background-color: #ffffff !important;
-        min-height: 44px;
+        min-height: 42px;
         box-shadow: none !important;
         transition: all 0.18s ease;
     }
@@ -170,21 +171,16 @@ def inject_custom_css():
         font-size: 14px !important;
     }
 
-    textarea {
-        min-height: 110px !important;
-    }
-
     .stButton > button,
     .stDownloadButton > button,
     div[data-testid="stFormSubmitButton"] > button {
         border-radius: 12px !important;
         border: 1px solid transparent !important;
-        padding: 0.72rem 1rem !important;
+        padding: 0.66rem 1rem !important;
         font-size: 14px !important;
         font-weight: 800 !important;
         transition: all 0.18s ease-in-out !important;
         box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
-        width: 100%;
     }
 
     .stButton > button:hover,
@@ -267,144 +263,10 @@ def inject_custom_css():
         color: #475569;
         margin-top: 8px;
         margin-bottom: 8px;
-        line-height: 1.6;
-    }
-
-    /* 让表格和控件在小屏更自然 */
-    [data-testid="column"] {
-        width: 100% !important;
-        flex: 1 1 100% !important;
-    }
-
-    /* 手机端适配 */
-    @media (max-width: 768px) {
-        .block-container {
-            padding-top: 0.6rem;
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-            padding-bottom: 1.2rem;
-        }
-
-        .page-header-wrap {
-            border-radius: 16px;
-            padding: 14px 14px 12px 14px;
-            margin-bottom: 10px;
-        }
-
-        .main-title {
-            font-size: 22px;
-            line-height: 1.3;
-        }
-
-        .sub-title {
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .section-title {
-            font-size: 15px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin-top: 14px;
-            margin-bottom: 10px;
-        }
-
-        .mini-title {
-            font-size: 14px;
-            margin-top: 8px;
-            margin-bottom: 6px;
-        }
-
-        .admin-card,
-        .compare-card {
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-brand {
-            font-size: 18px;
-            padding: 14px 10px;
-            border-radius: 14px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-tip {
-            font-size: 12px;
-            padding: 8px 10px;
-            border-radius: 10px;
-        }
-
-        label[data-testid="stWidgetLabel"] p {
-            font-size: 13px !important;
-        }
-
-        input, textarea,
-        div[data-testid="stNumberInput"] input {
-            font-size: 16px !important;
-        }
-
-        div[data-baseweb="input"] > div,
-        div[data-baseweb="select"] > div,
-        div[data-baseweb="textarea"] > div {
-            min-height: 42px;
-            border-radius: 10px !important;
-        }
-
-        textarea {
-            min-height: 96px !important;
-        }
-
-        .stButton > button,
-        .stDownloadButton > button,
-        div[data-testid="stFormSubmitButton"] > button {
-            min-height: 44px;
-            font-size: 14px !important;
-            border-radius: 10px !important;
-            padding: 0.7rem 0.9rem !important;
-        }
-
-        div[data-testid="metric-container"] {
-            padding: 10px;
-            border-radius: 12px;
-        }
-
-        div[data-testid="stDataFrame"] {
-            border-radius: 12px;
-        }
-
-        .hint-box {
-            font-size: 12px;
-            padding: 8px 10px;
-        }
-    }
-
-    /* 超小屏进一步压缩 */
-    @media (max-width: 480px) {
-        .main-title {
-            font-size: 20px;
-        }
-
-        .sub-title {
-            font-size: 12px;
-        }
-
-        .page-header-wrap {
-            padding: 12px;
-        }
-
-        .section-title {
-            font-size: 14px;
-            padding: 9px 10px;
-        }
-
-        .admin-card,
-        .compare-card {
-            padding: 10px;
-        }
     }
     </style>
     """, unsafe_allow_html=True)
+
 
 def render_page_header(title, subtitle=""):
     st.markdown(
@@ -650,7 +512,7 @@ def get_house_by_id(house_id):
 
 def get_unique_communities():
     preset_communities = [
-        "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭", "蓝光半岛公馆"
+        "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭"
     ]
 
     df = get_all_houses()
@@ -677,7 +539,10 @@ def main():
     inject_custom_css()
 
     st.sidebar.markdown('<div class="sidebar-brand">🏠 合肥看房助手</div>', unsafe_allow_html=True)
-
+    st.sidebar.markdown(
+        '<div class="sidebar-tip">高级后台系统风 · 房源录入 · 列表管理 · 房源对比 · 数据管理</div>',
+        unsafe_allow_html=True
+    )
 
     menu = ["📝 录入房屋信息", "📋 查看录入信息", "📊 房源对比", "🗑️ 管理数据"]
     choice = st.sidebar.radio("导航菜单", menu, index=0)
@@ -685,6 +550,16 @@ def main():
     # ================= 录入房屋信息 =================
     if choice == "📝 录入房屋信息":
         render_page_header("📝 房屋信息录入", "标准化录入房源信息，方便后续筛选、对比与决策")
+
+        top1, top2, top3, top4 = st.columns(4)
+        with top1:
+            st.metric("当前功能", "房源新增")
+        with top2:
+            st.metric("录入模式", "结构化表单")
+        with top3:
+            st.metric("核心目标", "统一比较标准")
+        with top4:
+            st.metric("数据载体", "CSV 本地存储")
 
         open_admin_card()
         render_section("1. 基础信息")
@@ -1097,11 +972,10 @@ def main():
                     if cancel_edit:
                         st.info("已取消编辑")
 
-
             st.download_button(
                 label="📥 导出当前列表为 CSV",
                 data=df.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig'),
-                file_name=f"hefei_house_{datetime.now().strftime('%Y-%m-%d')}.csv",
+                file_name=f"hefei_house_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
                 mime='text/csv',
                 use_container_width=True
             )
