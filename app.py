@@ -126,7 +126,7 @@ def inject_custom_css():
         font-weight: 800;
         text-align: center;
         margin-bottom: 14px;
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+        
     }
 
     .sidebar-tip {
