@@ -60,7 +60,7 @@ def inject_custom_css():
     .main-title {
         font-size: 30px;
         font-weight: 800;
-        color: #0f172a;
+        color: pink;
         margin-bottom: 4px;
         line-height: 1.2;
     }
