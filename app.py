@@ -118,7 +118,7 @@ def inject_custom_css():
     }
 
     .sidebar-brand {
-        background: #0f172a;
+        background: orange;
         padding: 18px 14px;
         border-radius: 18px;
         color: white;
