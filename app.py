@@ -972,10 +972,17 @@ def main():
                     if cancel_edit:
                         st.info("已取消编辑")
 
+            if not df.empty:
+                first_district = df['district'].iloc[0] if 'district' in df.columns else '未知区域'
+                first_community = df['community_name'].iloc[0] if 'community_name' in df.columns else '未知小区'
+                file_name = f"{first_district}-{first_community}_{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.csv"
+            else:
+                file_name = f"hefei_house_{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.csv"
+
             st.download_button(
                 label="📥 导出当前列表为 CSV",
                 data=df.to_csv(index=False, encoding='utf-8-sig').encode('utf-8-sig'),
-                file_name=f"hefei_house_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                file_name=file_name,
                 mime='text/csv',
                 use_container_width=True
             )
