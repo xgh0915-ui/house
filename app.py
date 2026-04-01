@@ -51,12 +51,12 @@ def inject_custom_css():
     }
 
     .page-header-wrap {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-        border: 1px solid #e5e7eb;
-        border-radius: 20px;
-        padding: 18px 20px 16px 20px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-        margin-bottom: 14px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    margin-bottom: 10px;
     }
 
     .main-title {
@@ -677,10 +677,6 @@ def main():
     inject_custom_css()
 
     st.sidebar.markdown('<div class="sidebar-brand">🏠 合肥看房助手</div>', unsafe_allow_html=True)
-    st.sidebar.markdown(
-        '<div class="sidebar-tip">记录、筛选、对比看房信息</div>',
-        unsafe_allow_html=True
-    )
 
     menu = ["📝 录入房屋信息", "📋 查看录入信息", "📊 房源对比", "🗑️ 管理数据"]
     choice = st.sidebar.radio("导航菜单", menu, index=0)
