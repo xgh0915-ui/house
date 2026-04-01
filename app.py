@@ -545,9 +545,9 @@ def main():
             house_type = st.selectbox("房屋类型", ["商品房", "回迁房"], help="商品房产权清晰，回迁房需确认土地性质")
 
         with col2:
-            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0)
-            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0)
-            unit_price = st.number_input("单价 (万/㎡)", min_value=0.0, step=0.1)
+            total_price = st.number_input("挂牌总价 (万)", min_value=0.0, step=1.0,value=None)
+            area = st.number_input("建筑面积 (㎡)", min_value=0.0, step=1.0,value=None)
+            unit_price = st.number_input("单价 (万/㎡)", min_value=0.0, step=0.1,value=None)
             parking = st.selectbox("地下停车场", ["有", "无", "不确定"])
 
         with col3:
