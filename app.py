@@ -288,15 +288,6 @@ def render_mini_title(title):
     st.markdown(f'<div class="mini-title">{title}</div>', unsafe_allow_html=True)
 
 
-
-def open_compare_card():
-    st.markdown('<div class="compare-card">', unsafe_allow_html=True)
-
-
-def close_compare_card():
-    st.markdown('</div>', unsafe_allow_html=True)
-
-
 def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10)"):
     score_key = f"{key_prefix}_score"
     minus_key = f"{key_prefix}_minus"
@@ -969,7 +960,7 @@ def main():
         df = get_all_houses()
 
         if not df.empty:
-            open_compare_card()
+
             st.markdown('<div class="filter-title">🔍 多条件筛选</div>', unsafe_allow_html=True)
 
             col1, col2, col3, col4 = st.columns(4)
@@ -1052,7 +1043,7 @@ def main():
 
             st.markdown('<div class="hint-box">建议先按区域、总价、面积筛选，再结合评分和优缺点比较。</div>',
                         unsafe_allow_html=True)
-            close_compare_card()
+
 
             if filter_district:
                 df = df[df['district'].isin(filter_district)]
@@ -1071,7 +1062,7 @@ def main():
 
             st.info(f"📊 找到 {len(df)} 套符合条件的房源")
 
-            open_compare_card()
+
             st.markdown('<div class="filter-title">📋 房源对比总表</div>', unsafe_allow_html=True)
 
             df_show = df.copy()
@@ -1088,7 +1079,7 @@ def main():
                 height=420,
                 hide_index=True
             )
-            close_compare_card()
+
 
             if len(df) > 0:
                 render_section("🔍 房源详情分析")
@@ -1099,7 +1090,7 @@ def main():
                     top_left, top_mid, top_right = st.columns([2, 2, 1.2])
 
                     with top_left:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">🏘 基本信息</div>', unsafe_allow_html=True)
                         st.write(f"**小区名称：** {detail['community_name']}")
                         st.write(f"**所属区域：** {detail['district']}")
@@ -1108,10 +1099,10 @@ def main():
                         st.write(f"**楼层信息：** {detail['floor_info']}")
                         st.write(f"**朝向：** {detail['orientation']}")
                         st.write(f"**建成年份：** {int(detail['year_built'])}")
-                        close_compare_card()
+
 
                     with top_mid:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">💰 价格指标</div>', unsafe_allow_html=True)
                         st.write(f"**挂牌总价：** {detail['total_price']} 万")
                         st.write(f"**建筑面积：** {detail['area']} ㎡")
@@ -1119,20 +1110,20 @@ def main():
                         st.write(f"**产权剩余年限：** {detail.get('property_rights_years', 'N/A')} 年")
                         st.write(f"**物业信息：** {detail.get('property_management', 'N/A')}")
                         st.write(f"**停车情况：** {detail.get('parking_info', 'N/A')}")
-                        close_compare_card()
+
 
                     with top_right:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">⭐ 综合结论</div>', unsafe_allow_html=True)
                         st.markdown(f'<div class="score-badge">{int(detail["score"])} 分</div>', unsafe_allow_html=True)
                         st.write("")
                         st.markdown(f'<div class="status-chip">{style_status_text(detail["status"])}</div>',
                                     unsafe_allow_html=True)
-                        close_compare_card()
+
 
                     d1, d2 = st.columns(2)
                     with d1:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">📜 产权与交易</div>', unsafe_allow_html=True)
                         st.write(f"**满五唯一：** {detail['is_full5_unique']}")
                         st.write(f"**抵押情况：** {detail['has_mortgage']}")
@@ -1143,10 +1134,10 @@ def main():
                         st.write(f"**查封/纠纷：** {detail.get('seizure_dispute', 'N/A')}")
                         st.write(f"**产权人情况：** {detail.get('co_owners', 'N/A')}")
                         st.write(f"**户口迁出安排：** {detail.get('hukou_migration', 'N/A')}")
-                        close_compare_card()
+
 
                     with d2:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">🔍 房屋细节</div>', unsafe_allow_html=True)
                         st.write(f"**房东出售原因：** {detail.get('landlord_reason', 'N/A')}")
                         st.write(f"**抵押详情：** {detail.get('mortgage_info', 'N/A')}")
@@ -1154,20 +1145,20 @@ def main():
                         st.write(f"**居住权/租赁状态：** {detail.get('occupancy_status', 'N/A')}")
                         st.write(f"**质量问题：** {detail.get('quality_issues', 'N/A')}")
                         st.write(f"**装修材料：** {detail.get('decoration_materials', 'N/A')}")
-                        close_compare_card()
+
 
                     e1, e2 = st.columns(2)
                     with e1:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">✅ 优点总结</div>', unsafe_allow_html=True)
                         st.write(detail['pros'])
-                        close_compare_card()
+
 
                     with e2:
-                        open_compare_card()
+
                         st.markdown('<div class="detail-box-title">❌ 缺点/风险总结</div>', unsafe_allow_html=True)
                         st.write(detail['cons'])
-                        close_compare_card()
+
 
             st.download_button(
                 label="📥 导出对比结果 CSV",
