@@ -538,11 +538,7 @@ def main():
     init_csv()
     inject_custom_css()
 
-    st.sidebar.markdown('<div class="sidebar-brand">🏠 合肥看房助手</div>', unsafe_allow_html=True)
-    st.sidebar.markdown(
-        '<div class="sidebar-tip">高级后台系统风 · 房源录入 · 列表管理 · 房源对比 · 数据管理</div>',
-        unsafe_allow_html=True
-    )
+    st.sidebar.markdown('<div class="sidebar-brand" style="background-color:orange">🏠 合肥看房助手</div>', unsafe_allow_html=True)
 
     menu = ["📝 录入房屋信息", "📋 查看录入信息", "📊 房源对比", "🗑️ 管理数据"]
     choice = st.sidebar.radio("导航菜单", menu, index=0)
