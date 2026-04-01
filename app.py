@@ -73,7 +73,7 @@ def inject_custom_css():
 
     .section-title {
         background: #ddeafb;
-        color: #ffffff;
+        color: black;
         padding: 12px 16px;
         border-radius: 14px;
         font-size: 17px;
