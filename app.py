@@ -311,6 +311,32 @@ def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10
     if score_key not in st.session_state:
         st.session_state[score_key] = int(default_score)
 
+    # 🔥 放大 slider 样式
+    st.markdown(
+        """
+        <style>
+        /* 整体高度 */
+        div[data-baseweb="slider"] {
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+
+        /* 滑轨高度 */
+        div[data-baseweb="slider"] > div {
+            height: 10px !important;
+        }
+
+        /* 滑块（圆点） */
+        div[data-baseweb="slider"] [role="slider"] {
+            width: 28px !important;
+            height: 28px !important;
+            margin-top: -9px;  /* 居中对齐 */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown(f"**{label}**")
 
     score = st.slider(
@@ -325,15 +351,15 @@ def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10
     st.markdown(
         f"""
         <div style="
-            margin-top:8px;
-            height:44px;
+            margin-top:10px;
+            height:48px;
             border:1px solid #d1d5db;
             border-radius:12px;
             background:#ffffff;
             display:flex;
             align-items:center;
             justify-content:center;
-            font-size:18px;
+            font-size:20px;
             font-weight:800;
             color:#2563eb;
             box-shadow:0 6px 14px rgba(15,23,42,0.04);
