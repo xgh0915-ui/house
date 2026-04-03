@@ -11,7 +11,7 @@ if hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_pref
     CSV_DIR = 'z_house'
 else:
     # 本地环境
-    CSV_DIR = r'E:\Desktop\wq_flow\z_house'
+    CSV_DIR = r'E:\Desktop\house'
 
 CSV_FILE = os.path.join(CSV_DIR, 'hefei_house.csv')
 st.set_page_config(page_title="合肥看房助手", layout="wide", page_icon="🏠")
@@ -309,47 +309,73 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10)"):
+import streamlit as st
+
+def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 (1-10)"):
     score_key = f"{key_prefix}_score"
 
     if score_key not in st.session_state:
         st.session_state[score_key] = int(default_score)
 
+    score = st.session_state[score_key]
+
     st.markdown(f"**{label}**")
 
-    score = st.slider(
-        label="",
-        min_value=1,
-        max_value=10,
-        value=st.session_state[score_key],
-        step=1,
-        key=score_key
-    )
-
+    # 显示当前分数
     st.markdown(
         f"""
         <div style="
-            margin-top:8px;
-            height:44px;
-            border:1px solid #d1d5db;
-            border-radius:12px;
-            background:#ffffff;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:18px;
-            font-weight:800;
+            text-align:center;
+            font-size:20px;
+            font-weight:700;
             color:#2563eb;
-            box-shadow:0 6px 14px rgba(15,23,42,0.04);
+            margin-bottom:8px;
         ">
-            当前评分：{score} 分
+            {score} 分
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    return score
+    # 进度条背景
+    percent = (score - 1) / 9 * 100
+    st.markdown(
+        f"""
+        <div style="
+            width:100%;
+            height:14px;
+            border-radius:999px;
+            background:linear-gradient(to right, #2563eb 0%, #2563eb {percent}%, #dbe4f0 {percent}%, #dbe4f0 100%);
+            margin-bottom:10px;
+        "></div>
+        """,
+        unsafe_allow_html=True
+    )
 
+    # 1~10 按钮，模拟滑动选择
+    cols = st.columns(10)
+    for i in range(10):
+        val = i + 1
+        with cols[i]:
+            btn_type = "primary" if score == val else "secondary"
+            if st.button(str(val), key=f"{key_prefix}_btn_{val}", use_container_width=True, type=btn_type):
+                st.session_state[score_key] = val
+                st.rerun()
+
+    # 两端刻度
+    c1, c2 = st.columns([1, 1])
+    with c1:
+        st.markdown(
+            "<div style='text-align:left;color:#6b7280;font-size:13px;'>1</div>",
+            unsafe_allow_html=True
+        )
+    with c2:
+        st.markdown(
+            "<div style='text-align:right;color:#6b7280;font-size:13px;'>10</div>",
+            unsafe_allow_html=True
+        )
+
+    return int(st.session_state[score_key])
 def style_status_text(status):
     if status == "考虑中":
         return "🟡 考虑中"
@@ -637,7 +663,7 @@ def main():
 
         st.markdown('<div class="hint-box">评分支持点击加减，更适合看房时快速给出主观判断。</div>',
                     unsafe_allow_html=True)
-        score = render_score_selector("add_house", default_score=5, label="综合评分 (1-10)")
+        score = render_custom_score_slider("add_house", default_score=5, label="综合评分 (1-10)")
         status = st.selectbox("当前状态", ["考虑中", "已排除", "准备谈价", "已成交"])
 
 
