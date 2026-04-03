@@ -325,7 +325,7 @@ def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 
                 font-weight: 700;
                 color: #2563eb;
                 text-align: center;
-                margin-bottom: 14px;
+                margin-bottom: 2px;
             ">
                 <span id="score-value">{st.session_state[score_key]}</span> 分
             </div>
@@ -354,7 +354,7 @@ def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 
                 justify-content: space-between;
                 font-size: 14px;
                 color: #6b7280;
-                margin-top: 10px;
+                margin-top: 2px;
             ">
                 <span>1</span>
                 <span>10</span>
