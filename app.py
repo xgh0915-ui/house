@@ -309,7 +309,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 (1-10)"):
+def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10)"):
     score_key = f"{key_prefix}_score"
 
     if score_key not in st.session_state:
@@ -317,108 +317,38 @@ def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 
 
     st.markdown(f"**{label}**")
 
-    slider_value = components.html(
-        f"""
-        <div style="padding: 2px 2px 0 2px;">
-            <div style="
-                font-size: 18px;
-                font-weight: 700;
-                color: #2563eb;
-                text-align: center;
-                margin-bottom: 2px;
-            ">
-                <span id="score-value">{st.session_state[score_key]}</span> 分
-            </div>
-
-            <input
-                type="range"
-                min="1"
-                max="10"
-                step="1"
-                value="{st.session_state[score_key]}"
-                id="custom-slider"
-                style="
-                    width: 100%;
-                    -webkit-appearance: none;
-                    appearance: none;
-                    height: 14px;
-                    border-radius: 999px;
-                    outline: none;
-                    background: linear-gradient(to right, #2563eb 0%, #2563eb 50%, #dbe4f0 50%, #dbe4f0 100%);
-                "
-                oninput="updateSlider(this.value)"
-            >
-
-            <div style="
-                display: flex;
-                justify-content: space-between;
-                font-size: 14px;
-                color: #6b7280;
-                margin-top: 2px;
-            ">
-                <span>1</span>
-                <span>10</span>
-            </div>
-        </div>
-
-        <style>
-        input[type=range]::-webkit-slider-thumb {{
-            -webkit-appearance: none;
-            appearance: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #2563eb;
-            cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.25);
-            margin-top: -8px;
-        }}
-
-        input[type=range]::-webkit-slider-runnable-track {{
-            height: 14px;
-            border-radius: 999px;
-        }}
-
-        input[type=range]::-moz-range-thumb {{
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #2563eb;
-            cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.25);
-        }}
-
-        input[type=range]::-moz-range-track {{
-            height: 14px;
-            border-radius: 999px;
-            background: #dbe4f0;
-        }}
-        </style>
-
-        <script>
-        const slider = document.getElementById("custom-slider");
-        const scoreValue = document.getElementById("score-value");
-
-        function updateSlider(val) {{
-            scoreValue.innerText = val;
-
-            const min = parseInt(slider.min);
-            const max = parseInt(slider.max);
-            const percent = ((val - min) / (max - min)) * 100;
-
-            slider.style.background =
-                `linear-gradient(to right, #2563eb 0%, #2563eb ${{percent}}%, #dbe4f0 ${{percent}}%, #dbe4f0 100%)`;
-        }}
-
-        updateSlider(slider.value);
-        </script>
-        """,
-        height=120,
+    score = st.slider(
+        label="",
+        min_value=1,
+        max_value=10,
+        value=st.session_state[score_key],
+        step=1,
+        key=score_key
     )
 
-    return slider_value
+    st.markdown(
+        f"""
+        <div style="
+            margin-top:8px;
+            height:44px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
+            background:#ffffff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            font-weight:800;
+            color:#2563eb;
+            box-shadow:0 6px 14px rgba(15,23,42,0.04);
+        ">
+            当前评分：{score} 分
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    return score
 
 def style_status_text(status):
     if status == "考虑中":
@@ -707,7 +637,7 @@ def main():
 
         st.markdown('<div class="hint-box">评分支持点击加减，更适合看房时快速给出主观判断。</div>',
                     unsafe_allow_html=True)
-        score = render_custom_score_slider("add_house", default_score=5, label="综合评分 (1-10)")
+        score = render_score_selector("add_house", default_score=5, label="综合评分 (1-10)")
         status = st.selectbox("当前状态", ["考虑中", "已排除", "准备谈价", "已成交"])
 
 
