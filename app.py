@@ -311,31 +311,32 @@ def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10
     if score_key not in st.session_state:
         st.session_state[score_key] = int(default_score)
 
-    # 🔥 放大 slider 样式
-    st.markdown(
-        """
-        <style>
-        /* 整体高度 */
-        div[data-baseweb="slider"] {
-            padding-top: 18px;
-            padding-bottom: 18px;
-        }
+    st.markdown("""
+    <style>
+    /* 整个 slider 区域 */
+    div[data-baseweb="slider"] {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 
-        /* 滑轨高度 */
-        div[data-baseweb="slider"] > div {
-            height: 30px !important;
-        }
+    /* 🔥 真正的滑轨（关键！） */
+    div[data-baseweb="slider"] div[role="presentation"] {
+        height: 12px !important;
+    }
 
-        /* 滑块（圆点） */
-        div[data-baseweb="slider"] [role="slider"] {
-            width: 14px !important;
-            height: 14px !important;
-            margin-top: -9px;  /* 居中对齐 */
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    /* 已选部分（红色部分） */
+    div[data-baseweb="slider"] div[role="presentation"] > div {
+        height: 12px !important;
+    }
+
+    /* 滑块（圆点） */
+    div[data-baseweb="slider"] div[role="slider"] {
+        width: 30px !important;
+        height: 30px !important;
+        margin-top: -10px !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     st.markdown(f"**{label}**")
 
