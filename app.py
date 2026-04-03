@@ -323,13 +323,13 @@ def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10
 
         /* 滑轨高度 */
         div[data-baseweb="slider"] > div {
-            height: 10px !important;
+            height: 30px !important;
         }
 
         /* 滑块（圆点） */
         div[data-baseweb="slider"] [role="slider"] {
-            width: 28px !important;
-            height: 28px !important;
+            width: 14px !important;
+            height: 14px !important;
             margin-top: -9px;  /* 居中对齐 */
         }
         </style>
