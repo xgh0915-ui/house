@@ -319,7 +319,7 @@ def render_custom_score_slider(key_prefix, default_score=5, label="综合评分 
 
     slider_value = components.html(
         f"""
-        <div style="padding: 10px 6px 0 6px;">
+        <div style="padding: 2px 2px 0 2px;">
             <div style="
                 font-size: 18px;
                 font-weight: 700;
