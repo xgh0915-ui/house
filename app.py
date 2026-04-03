@@ -513,7 +513,7 @@ def get_house_by_id(house_id):
 
 def get_unique_communities():
     preset_communities = [
-        "蓝光半岛公馆", "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城", "开元华庭"
+        "蓝光半岛公馆", "庐阳柳林苑", "阅庐春晓", "文一名门湖畔(西区)", "中国铁建国际城(品园)", "中国铁建国际城(旭园)" "皖投天下名筑"
     ]
 
     df = get_all_houses()
