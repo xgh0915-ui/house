@@ -307,46 +307,44 @@ def render_mini_title(title):
 
 def render_score_selector(key_prefix, default_score=5, label="综合评分 (1-10)"):
     score_key = f"{key_prefix}_score"
-    minus_key = f"{key_prefix}_minus"
-    plus_key = f"{key_prefix}_plus"
 
     if score_key not in st.session_state:
         st.session_state[score_key] = int(default_score)
 
     st.markdown(f"**{label}**")
-    c1, c2, c3 = st.columns([1, 2, 1])
 
-    with c1:
-        if st.button("➖", key=minus_key, use_container_width=True):
-            st.session_state[score_key] = max(1, st.session_state[score_key] - 1)
+    score = st.slider(
+        label="",
+        min_value=1,
+        max_value=10,
+        value=st.session_state[score_key],
+        step=1,
+        key=score_key
+    )
 
-    with c2:
-        st.markdown(
-            f"""
-            <div style="
-                height:44px;
-                border:1px solid #d1d5db;
-                border-radius:12px;
-                background:#ffffff;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                font-size:18px;
-                font-weight:800;
-                color:#2563eb;
-                box-shadow:0 6px 14px rgba(15,23,42,0.04);
-            ">
-                {st.session_state[score_key]} 分
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    st.markdown(
+        f"""
+        <div style="
+            margin-top:8px;
+            height:44px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
+            background:#ffffff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            font-weight:800;
+            color:#2563eb;
+            box-shadow:0 6px 14px rgba(15,23,42,0.04);
+        ">
+            当前评分：{score} 分
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    with c3:
-        if st.button("➕", key=plus_key, use_container_width=True):
-            st.session_state[score_key] = min(10, st.session_state[score_key] + 1)
-
-    return st.session_state[score_key]
+    return score
 
 
 def style_status_text(status):
