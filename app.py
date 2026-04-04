@@ -467,55 +467,93 @@ def update_house(house_id, data):
     if not os.path.exists(CSV_FILE):
         return False
 
-    df = pd.read_csv(CSV_FILE, encoding='utf-8-sig')
-    mask = df['id'] == house_id
-    if not mask.any():
+    try:
+        # 先按 object 读，避免 pandas 因 dtype 冲突报错
+        df = pd.read_csv(CSV_FILE, encoding='utf-8-sig', dtype=object)
+
+        # id 单独转数值，方便匹配
+        df['id'] = pd.to_numeric(df['id'], errors='coerce')
+        house_id = int(house_id)
+
+        mask = df['id'] == house_id
+        if not mask.any():
+            return False
+
+        update_fields = {
+            'view_date': data.get('view_date'),
+            'community_name': data.get('community'),
+            'district': data.get('district'),
+            'total_price': data.get('total_price'),
+            'unit_price': data.get('unit_price'),
+            'area': data.get('area'),
+            'layout': data.get('layout'),
+            'floor_info': data.get('floor'),
+            'orientation': data.get('orientation'),
+            'year_built': data.get('year'),
+            'is_full5_unique': data.get('full5'),
+            'has_mortgage': data.get('mortgage'),
+            'school_quota': data.get('school'),
+            'decoration': data.get('decoration'),
+            'landlord_reason': data.get('reason'),
+            'pros': data.get('pros'),
+            'cons': data.get('cons'),
+            'score': data.get('score'),
+            'status': data.get('status'),
+            'parking': data.get('parking'),
+            'house_type': data.get('house_type'),
+            'property_rights_years': data.get('property_rights_years'),
+            'parking_info': data.get('parking_info'),
+            'property_management': data.get('property_management'),
+            'mortgage_info': data.get('mortgage_info'),
+            'loan_backup': data.get('loan_backup'),
+            'occupancy_status': data.get('occupancy_status'),
+            'quality_issues': data.get('quality_issues'),
+            'decoration_materials': data.get('decoration_materials'),
+            'seizure_dispute': data.get('seizure_dispute'),
+            'co_owners': data.get('co_owners'),
+            'hukou_migration': data.get('hukou_migration'),
+            'land_grant_type': data.get('land_grant_type'),
+            'land_usage_type': data.get('land_usage_type')
+        }
+
+        # 明确的数值列
+        numeric_fields = {
+            'total_price': float,
+            'unit_price': float,
+            'area': float,
+            'year_built': int,
+            'score': int,
+            'property_rights_years': int,
+        }
+
+        for field, value in update_fields.items():
+            if field not in df.columns:
+                continue
+
+            if value is None:
+                continue
+
+            # 数值列安全转换
+            if field in numeric_fields:
+                if value == "" or value is None:
+                    df.loc[mask, field] = ""
+                else:
+                    try:
+                        df.loc[mask, field] = numeric_fields[field](value)
+                    except (ValueError, TypeError):
+                        return False
+            else:
+                # 其余列统一转字符串，避免 dtype 冲突
+                df.loc[mask, field] = str(value)
+
+        # 保存前把 id 恢复成整数
+        df['id'] = df['id'].astype('Int64')
+        df.to_csv(CSV_FILE, index=False, encoding='utf-8-sig')
+        return True
+
+    except Exception as e:
+        print(f"update_house error: {e}")
         return False
-
-    update_fields = {
-        'view_date': data.get('view_date'),
-        'community_name': data.get('community'),
-        'district': data.get('district'),
-        'total_price': data.get('total_price'),
-        'unit_price': data.get('unit_price'),
-        'area': data.get('area'),
-        'layout': data.get('layout'),
-        'floor_info': data.get('floor'),
-        'orientation': data.get('orientation'),
-        'year_built': data.get('year'),
-        'is_full5_unique': data.get('full5'),
-        'has_mortgage': data.get('mortgage'),
-        'school_quota': data.get('school'),
-        'decoration': data.get('decoration'),
-        'landlord_reason': data.get('reason'),
-        'pros': data.get('pros'),
-        'cons': data.get('cons'),
-        'score': data.get('score'),
-        'status': data.get('status'),
-        'parking': data.get('parking'),
-        'house_type': data.get('house_type'),
-        'property_rights_years': data.get('property_rights_years'),
-        'parking_info': data.get('parking_info'),
-        'property_management': data.get('property_management'),
-        'mortgage_info': data.get('mortgage_info'),
-        'loan_backup': data.get('loan_backup'),
-        'occupancy_status': data.get('occupancy_status'),
-        'quality_issues': data.get('quality_issues'),
-        'decoration_materials': data.get('decoration_materials'),
-        'seizure_dispute': data.get('seizure_dispute'),
-        'co_owners': data.get('co_owners'),
-        'hukou_migration': data.get('hukou_migration'),
-        'land_grant_type': data.get('land_grant_type'),
-        'land_usage_type': data.get('land_usage_type')
-    }
-
-    for field, value in update_fields.items():
-        if value is not None and field in df.columns:
-            df.loc[mask, field] = value
-
-    df.to_csv(CSV_FILE, index=False, encoding='utf-8-sig')
-    return True
-
 
 def get_all_houses():
     if not os.path.exists(CSV_FILE):
@@ -942,7 +980,7 @@ def main():
 
                     if submit_edit:
                         update_data = {
-                            'view_date': str(selected_house['view_date']),
+                            'view_date': str(selected_house['view_date']) if pd.notna(selected_house['view_date']) else "",
                             'community': edit_community,
                             'district': edit_district,
                             'total_price': edit_total_price,
